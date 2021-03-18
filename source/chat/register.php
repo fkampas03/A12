@@ -51,7 +51,7 @@
                     <input type="password" class="form-control" id="password" name="password" minlength="8" required>
                 </div>
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary" name="submit">Register</button>
+                    <button type="submit" class="btn btn-primary" name="submitRegister">Register</button>
                 </div>
                 <div class="mb-2">
                     <a href="login.php" class="link">Already got an account? Login here!</a>
