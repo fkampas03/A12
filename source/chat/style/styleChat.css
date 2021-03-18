@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+/***** nav **********/
+
+/***** heading ********/
+
+.heading {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+
+}
+
+/***** fieldset *******/
+
+#chat {
+    height: 400px;
+    width: 70%;
+    border: 1px solid black;
+    margin: auto;
+    overflow-y: scroll;
+}
+
+#eingabe {
+    margin: auto;
+    width: 70%;
+}
+
+.leftChat {
+    margin-left: 5%;
+    width: 45%;
+}
+
+.rightChat {
+    margin-left: 50%;
+    width: 45%;
+    text-align: right;
+}
