@@ -1,31 +1,87 @@
 <?php
     $username = $email = $password = "";
+    $userDataFile = '../datei/logindata.csv';
 
-    if(isset($_POST['submitRegister'])) {   
+    //Wird ausgeführt, wenn das Formular zur Registriereung abgeschickt wurde.
+    if(isset($_POST['submitRegister'])) {
+
+	//Informationen von der Registrierseite holen   
         $username = $_POST['username'];
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = hash('sha256', $_POST['password']);
 
+	//Auf Sonderzeichen prüfen
         $username = sonderzeichen($username);
         $email = sonderzeichen($email);
-        $password = sonderzeichen($password);
 
-        $empfaenger = $email;
-        $betreff = "Die Mail funktioniert";
-        $from = "From: Felix Kampas <medt.infos@gmail.com>\r\n";
-        $from .= "Reply-To: medt.infos@gmail.com\r\n";
-        $from .= "Content-Type: text/html\r\n";
-        $text = "Hola Amigo";
-        $mail($empfaenger, $betreff, $text, $from);
+	//Daten aus dem File holen zur Überprüfung
+	$handler = fopen($userDataFile, 'r');
 
+	    $usernames = array();
+	    $emails = array();	    
+
+	    ini_set('auto_detect_line_endings',TRUE);
+	    $row = 0;
+	    $fail = 0;
+	    while (($data = fgetcsv($handler, 1000, ";")) !== FALSE ) {
+	    	$num = count($data);
+            	for ($c=0; $c < $num; $c+=3) {
+               	    array_push($usernames, $data[$c]);
+            	}
+		for ($c=1; $c < $num; $c+=3) {
+               	    array_push($emails, $data[$c]);
+            	}
+		if($usernames[$row] == $username or $emails[$row] == $email)	{
+		    $fail = 1;
+		}
+
+		$row = $row + 1;		
+	    }
+	    ini_set('auto_detect_line_endings',FALSE);
+
+	fclose($handler);
+
+	//Daten werden gespeichert
+	if($fail == 0)	{	
+	    //Informationen in das File schreiben
+	    $handler = fopen($userDataFile, 'a+');
+
+	    	fwrite($handler, $username . ";" . $email . ";" . $password . "\n");
+	
+	    fclose($handler);
+	}
+	//Fehler-Meldung wird auf der registration-Site ausgegeben
+	else	{
+	    session_start();
+            $_SESSION ['wrongregistration'] = "";
+	    header('Location: ../register.php');
+
+	}
+
+	
+	
+
+
+
+
+	//echo $username, $password, $email;
+
+        //$empfaenger = $email;
+        //$betreff = "Die Mail funktioniert";
+        //$from = "From: Felix Kampas <medt.infos@gmail.com>\r\n";
+        //$from = $from . "Reply-To: medt.infos@gmail.com\r\n";
+        //$from = $from . "Content-Type: text/html\r\n";
+        //$text = "Hola Amigo";
+	//mail($empfaenger, $betreff, $text, $from);
     }
 
+    //Wird ausgeführt, wenn das Formular zur Registriereung abgeschickt wurde.
     if(isset($_POST['submitLogin']))    {
 
     }
 
 
-    //ÃœberprÃ¼fung und wechseln von Sonderzeichen
+    //Ueberpruefung und wechseln von Sonderzeichen
     function sonderzeichen($string) {
         $string = str_replace("Ã¤", "ae", $string);
         $string = str_replace("Ã¼", "ue", $string);

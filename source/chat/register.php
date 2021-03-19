@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if(isset($_SESSION['wrongregistration']))	{
+	echo '<script language="javascript">';
+	echo 'alert("Username or email adress already taken. Please try again!")';
+	echo '</script>';    
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,6 +67,11 @@
             </form>
         </fieldset>
     </main>
+
+    <?php
+        session_destroy();
+    ?>
+
 
 </body>
 </html>
