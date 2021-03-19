@@ -8,9 +8,52 @@
     <title>Chat</title>
 
     <link rel="stylesheet" href="style/styleChat.css">
+    <script>
+        timeSlap=60 // sekunden
+        reloading=function()
+        {
+            setTimeout("reloading()",1000);
+
+            status=timeSlap+" sekunden bis zum reload";
+            if(timeSlap>0) timeSlap--;
+            else location.reload();
+        }
+    </script>
 </head>
 
 <body>
+
+<?php
+
+session_start();
+
+$_SESSION ['chatTexte'] = array();
+$_SESSION ['user'] = array(); 
+$currentText = null;
+
+//Hier wird überprüft ob etwas übergeben wird
+if(isset($_POST["text"])){
+//Die Übergebenen Sachen werden in Variablen gespeichert
+$currentText = $_POST["text"];
+}
+
+//Es wird geschaut ob schon files mit Daten existieren, wenn ja dann werden die Daten in die Arrays dazugespeichert
+if(file_exists('chatTexte.txt')) {
+    foreach(explode(";;;",file_get_contents("chatTexte.txt")) as $texte) {
+        $_SESSION ['chatTexte'][] = $texte;
+    }
+}
+
+if($currentText != null) {
+    //Die Variablen werden in arrays hinzugefügt
+    $_SESSION ['chatTexte'][] = $currentText;
+    echo $currentText;
+    echo "<pre>"; var_dump($_SESSION ['chatTexte']); echo "</pre>";
+}
+
+file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
+
+?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
@@ -28,7 +71,7 @@
   </div>
 </nav>
     
-
+<section>
 <div class="heading">
   <h1 class="display-3">
     Chat
@@ -36,34 +79,21 @@
 </div>
 <div id="chat">
 
-<p class="rightChat">text1links</p>
-<p class="rightChat">text1links</p>
-<p class="leftChat">text1links</p>
-<p class="rightChat">text1links</p>
-<p class="rightChat">text2rechts</p>
-<p class="rightChat">text2rechts</p>
-<p class="leftChat">text2rechts</p>
-<p class="rightChat">text2rechts</p>
-<p class="rightChat">text1links</p>
-<p class="rightChat">text1links</p>
-<p class="leftChat">text1links</p>
-<p class="rightChat">text1links</p>
-<p class="rightChat">text2rechts</p>
-<p class="rightChat">text2rechts</p>
-<p class="leftChat">text2rechts</p>
-
-
 
 </div>
 <div id="eingabe">
 
-<form action="" method="post">
+<form name="chatForm" action="#" method="POST">
   <div class="d-flex flex-row">
-    <input class="col-10" type="text" name="text" id="text" placeholder="message">
+    <input class="col-10" type="text" name="text" id="text" placeholder="message" required>
     <input class="col-2"type="submit" value="senden">
   </div>
 </form>
 </div>
+</section>
+<footer>
+      <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+</footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
