@@ -1,3 +1,38 @@
+<?php
+
+SESSION_START();
+$datai = "chatTexte.txt";
+$_SESSION ['chatTexte'] = array();
+$currentText = null;
+
+//Hier wird überprüft ob etwas übergeben wird
+if(isset($_POST["text"])){
+//Die Übergebenen Sachen werden in Variablen gespeichert
+$currentText = $_POST["text"];
+}
+
+
+
+//Es wird geschaut ob schon files mit Daten existieren, wenn ja dann werden die Daten in die Arrays dazugespeichert
+if(file_exists($datai)) {
+    foreach(explode(";;;",file_get_contents($datai)) as $texte) {
+        $_SESSION ['chatTexte'][] = $texte;
+    }
+}
+
+if($currentText != null) {
+    //Die Variablen werden in arrays hinzugefügt
+    $_SESSION ['chatTexte'][] = $currentText;
+    $_SESSION ['chatTexte'][] = $_SESSION["username"]; 
+    //echo $currentText;
+    //echo "<pre>"; var_dump($_SESSION ['chatTexte']); echo "</pre>";
+}
+
+file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
+
+//echo $_SESSION["username"];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +44,7 @@
 
     <link rel="stylesheet" href="style/styleChat.css">
     <script>
-        timeSlap=60 // sekunden
+        timeSlap=2 // sekunden
         reloading=function()
         {
             setTimeout("reloading()",1000);
@@ -23,38 +58,6 @@
 
 <body>
 
-<?php
-
-session_start();
-
-$_SESSION ['chatTexte'] = array();
-$_SESSION ['user'] = array(); 
-$currentText = null;
-
-//Hier wird Ã¼berprÃ¼ft ob etwas Ã¼bergeben wird
-if(isset($_POST["text"])){
-//Die Ãœbergebenen Sachen werden in Variablen gespeichert
-$currentText = $_POST["text"];
-}
-
-//Es wird geschaut ob schon files mit Daten existieren, wenn ja dann werden die Daten in die Arrays dazugespeichert
-if(file_exists('chatTexte.txt')) {
-    foreach(explode(";;;",file_get_contents("chatTexte.txt")) as $texte) {
-        $_SESSION ['chatTexte'][] = $texte;
-    }
-}
-
-if($currentText != null) {
-    //Die Variablen werden in arrays hinzugefÃ¼gt
-    $_SESSION ['chatTexte'][] = $currentText;
-    echo $currentText;
-    echo "<pre>"; var_dump($_SESSION ['chatTexte']); echo "</pre>";
-}
-
-file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
-
-?>
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <div class="col-11 ms-5">
@@ -65,7 +68,7 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ">
-        <a class="nav-link active" aria-current="page" href="#">Logout</a>
+        <a class="nav-link active" aria-current="page" href="register.php">Logout</a>
       </div>
     </div>
   </div>
@@ -78,7 +81,22 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
   </h1>
 </div>
 <div id="chat">
-
+<?php 
+  $text = "";
+  $i = 0;
+  for($i = 1; $i<count($_SESSION["chatTexte"]);$i++) {
+    if($i%2!=0) {
+      $text = $_SESSION["chatTexte"][$i];
+    }
+    if($i%2==0) {
+      if($_SESSION["username"] == $_SESSION["chatTexte"][$i]) {
+        echo "<p class=\"rightChat\">$text</p>";
+      } else {
+        echo "<p class=\"leftChat\">$text</p>";
+      }
+    }
+  }
+?>
 
 </div>
 <div id="eingabe">
