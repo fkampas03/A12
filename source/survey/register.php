@@ -28,12 +28,22 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <div class="col-lg-11 col-md-8 ms-5">
-                    <a class="navbar-brand nav-font" href="#">Chat</a>
+                <div class="col-lg-10 col-md-5 ms-3">
+                    <a class="navbar-brand nav-font" href="overview.php">Umfrage</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ">
+                        <a class="nav-link active" aria-current="page" href="overview.php">Overview</a>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ">
+                        <a class="nav-link active" aria-current="page" href="register.php"><b>Register</b></a>
+                    </div>
+                </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
                         <a class="nav-link active" aria-current="page" href="login.php">Login</a>

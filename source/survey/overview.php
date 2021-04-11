@@ -1,11 +1,14 @@
 <?php
+    
     session_start();
-    if(isset($_SESSION['wronglogin']))	{
-	echo '<script language="javascript">';
-	echo 'alert("Username/email or password are incorrect. Please try again!")';
-	echo '</script>';    
+
+    function createEintraege($creator, $topic, $text, $link)	{
+        echo "<br>";	
+        createEintrag($creator, $topic, $text, $link);
     }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +26,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous" async></script>
     
 
-    <title>Login</title>
+    <title>Umfragen</title>
 </head>
 <body>
     <header>
@@ -37,7 +40,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overview.php">Overview</a>
+                        <a class="nav-link active" aria-current="page" href="overview.php"><b>Overview</b></a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -47,32 +50,30 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="login.php"><b>Login</b></a>
+                        <a class="nav-link active" aria-current="page" href="login.php">Login</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
     <main>
-        <fieldset class="col-lg-6 col-md-8 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5 fieldsetStyle">
-            <legend>Login</legend>
-            <form name="formLogin" action="php/process.php" method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="loginName" class="form-label">Username or Email</label>
-                    <input type="text" class="form-control" id="loginName" name="loginName" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" minlength="8" required>
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary" name="submitLogin">Login</button>
-                </div>
-                <div class="mb-2">
-                    <a href="register.php" class="link">Havent't got an account yet? Register here!</a>
-                </div>
-            </form>
-        </fieldset>
+        <?php 
+        //Die Methode create Eintrage muss hier aufgerufen werden
+        createEintraege("Felix", "Survey", "Dies ist ein Test", "login.php");
+        function createEintrag($creator, $topic, $text, $link) {?>
+            <fieldset class="col-lg-9 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid pink; border-radius: 2em;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <?php 
+                                echo '<a href="' . $link . '"><b>' . $topic . "</b></a>" . " by <i>" . $creator . "</i>" . "<br><br>" . $text;
+                            ?>
+                        </div>    
+                    </div>
+                </div>    
+            </fieldset>
+        <?php }?>
+
     </main>
 
     <footer class="text-white-50 text-center bg-secondary">

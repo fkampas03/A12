@@ -1,12 +1,3 @@
-<?php
-    session_start();
-    if(isset($_SESSION['wronglogin']))	{
-	echo '<script language="javascript">';
-	echo 'alert("Username/email or password are incorrect. Please try again!")';
-	echo '</script>';    
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,13 +14,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous" async></script>
     
 
-    <title>Login</title>
+    <title>Umfrage anzeigen</title>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <div class="col-lg-10 col-md-5 ms-3">
+                <div class="col-lg-9 col-md-5 ms-3">
                     <a class="navbar-brand nav-font" href="overview.php">Umfrage</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,52 +28,29 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overview.php">Overview</a>
+                        <a class="nav-link active" aria-current="page" href="erstellen.php">Erstellen</a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="register.php">Register</a>
+                        <a class="nav-link active" aria-current="page" href="ergebnisse.php"><b>Anzeigen</b></a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="login.php"><b>Login</b></a>
+                        <a class="nav-link active" aria-current="page" href="overview.php">Ausloggen</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
     <main>
-        <fieldset class="col-lg-6 col-md-8 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5 fieldsetStyle">
-            <legend>Login</legend>
-            <form name="formLogin" action="php/process.php" method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="loginName" class="form-label">Username or Email</label>
-                    <input type="text" class="form-control" id="loginName" name="loginName" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" minlength="8" required>
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary" name="submitLogin">Login</button>
-                </div>
-                <div class="mb-2">
-                    <a href="register.php" class="link">Havent't got an account yet? Register here!</a>
-                </div>
-            </form>
-        </fieldset>
+
     </main>
 
     <footer class="text-white-50 text-center bg-secondary">
       <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
     </footer>
 
-    <?php
-        session_destroy();
-    ?>
-
 </body>
 </html>
-
