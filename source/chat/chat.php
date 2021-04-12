@@ -5,15 +5,9 @@ $datai = "chatTexte.txt";
 $_SESSION ['chatTexte'] = array();
 $currentText = null;
 
-<<<<<<< HEAD
-//Hier wird überprüft ob etwas übergeben wird
-if(isset($_POST["text"])){
-//Die Übergebenen Sachen werden in Variablen gespeichert
-=======
 //Hier wird Ã¼berprÃ¼ft ob etwas Ã¼bergeben wird
 if(isset($_POST["text"])){
 //Die Ãœbergebenen Sachen werden in Variablen gespeichert
->>>>>>> e1d14a1336a6e8c95f878fbfe8aec2ec7140f6df
 $currentText = $_POST["text"];
 }
 
@@ -27,11 +21,7 @@ if(file_exists($datai)) {
 }
 
 if($currentText != null) {
-<<<<<<< HEAD
-    //Die Variablen werden in arrays hinzugefügt
-=======
     //Die Variablen werden in arrays hinzugefÃ¼gt
->>>>>>> e1d14a1336a6e8c95f878fbfe8aec2ec7140f6df
     $_SESSION ['chatTexte'][] = $currentText;
     $_SESSION ['chatTexte'][] = $_SESSION["username"]; 
     //echo $currentText;
