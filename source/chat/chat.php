@@ -10,31 +10,7 @@ if(isset($_POST["text"])){
 //Die Übergebenen Sachen werden in Variablen gespeichert
 $currentText = $_POST["text"];
 }
- 
-function show()	{
-  $text = "";
-  $i = 0;
-  
-  if(file_exists($datai)) {
-    foreach(explode(";;;",file_get_contents($datai)) as $texte) {
-        $_SESSION ['chatTexte'][] = $texte;
-    }
-  }
 
-  for($i = 1; $i<count($_SESSION["chatTexte"]);$i++) {
-    if($i%2!=0) {
-      $text = $_SESSION["chatTexte"][$i];
-    }
-    if($i%2==0) {
-      if($_SESSION["username"] == $_SESSION["chatTexte"][$i]) {
-        echo "<p class=\"rightChat\">$text</p>";
-      } else {
-        echo "<p class=\"leftChat\">$text</p>";
-      }
-    }
-  }
-}
- 
 
 
 //Es wird geschaut ob schon files mit Daten existieren, wenn ja dann werden die Daten in die Arrays dazugespeichert
@@ -52,6 +28,24 @@ if($currentText != null) {
     //echo "<pre>"; var_dump($_SESSION ['chatTexte']); echo "</pre>";
 }
 
+
+function show() {
+  $text = "";
+  $i = 0;
+  for($i = 1; $i<count($_SESSION["chatTexte"]);$i++) {
+    if($i%2!=0) {
+      $text = $_SESSION["chatTexte"][$i];
+    }
+    if($i%2==0) {
+      if($_SESSION["username"] == $_SESSION["chatTexte"][$i]) {
+        echo "<p class=\"rightChat\">$text</p>";
+      } else {
+        echo "<p class=\"leftChat\">$text</p>";
+      }
+    }
+  }
+}
+
 file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
 
 //echo $_SESSION["username"];
@@ -64,7 +58,6 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Chat</title>
 
     <link rel="stylesheet" href="style/styleChat.css">
@@ -76,7 +69,7 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
 
             status=timeSlap+" sekunden bis zum reload";
             if(timeSlap>0) timeSlap--;
-            else location.reload(true);
+            else location.reload();
         }
     </script>
 </head>
@@ -107,21 +100,20 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
 </div>
 <div id="chat">
 
-<?php 
-echo '
 <script type="text/javascript">
-setInterval(reload, 1000);
-function reload()
+setInterval(reload, 5000);
+
+function reload( )
 {
-  document.getElementById("chat").innerHTML =' . show() . ';
+  document.write("<?php show();?>");
 }
-</script>'
-?>
+</script>
+
 
 </div>
 <div id="eingabe">
 
-<form name="chatForm" action="" method="POST">
+<form name="chatForm" action="chatProcess.php" method="POST" target="_self">
   <div class="d-flex flex-row">
     <input class="col-10" type="text" name="text" id="text" placeholder="message" required>
     <input class="col-2"type="submit" value="senden">
@@ -129,14 +121,11 @@ function reload()
 </form>
 </div>
 </section>
-<footer class="text-white-50 text-center bg-secondary">
+<footer>
       <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
 </footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-
-
-
 </body>
 </html>
