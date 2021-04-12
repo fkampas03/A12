@@ -113,7 +113,7 @@ function reload( )
 </div>
 <div id="eingabe">
 
-<form name="chatForm" action="chatProcess.php" method="POST" target="_self">
+<form name="chatForm" action="php/chatProcess.php" method="POST" target="_self">
   <div class="d-flex flex-row">
     <input class="col-10" type="text" name="text" id="text" placeholder="message" required>
     <input class="col-2"type="submit" value="senden">
