@@ -50,4 +50,6 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
 
 //echo $_SESSION["username"];
 
+header ("LOCATION: chat.php"); 
+
 ?>
