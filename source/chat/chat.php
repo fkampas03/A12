@@ -5,15 +5,9 @@ $datai = "chatTexte.txt";
 $_SESSION ['chatTexte'] = array();
 $currentText = null;
 
-<<<<<<< HEAD
 //Hier wird überprüft ob etwas übergeben wird
 if(isset($_POST["text"])){
 //Die Übergebenen Sachen werden in Variablen gespeichert
-=======
-//Hier wird Ã¼berprÃ¼ft ob etwas Ã¼bergeben wird
-if(isset($_POST["text"])){
-//Die Ãœbergebenen Sachen werden in Variablen gespeichert
->>>>>>> e1d14a1336a6e8c95f878fbfe8aec2ec7140f6df
 $currentText = $_POST["text"];
 }
 
@@ -27,15 +21,29 @@ if(file_exists($datai)) {
 }
 
 if($currentText != null) {
-<<<<<<< HEAD
     //Die Variablen werden in arrays hinzugefügt
-=======
-    //Die Variablen werden in arrays hinzugefÃ¼gt
->>>>>>> e1d14a1336a6e8c95f878fbfe8aec2ec7140f6df
     $_SESSION ['chatTexte'][] = $currentText;
     $_SESSION ['chatTexte'][] = $_SESSION["username"]; 
     //echo $currentText;
     //echo "<pre>"; var_dump($_SESSION ['chatTexte']); echo "</pre>";
+}
+
+
+function show() {
+  $text = "";
+  $i = 0;
+  for($i = 1; $i<count($_SESSION["chatTexte"]);$i++) {
+    if($i%2!=0) {
+      $text = $_SESSION["chatTexte"][$i];
+    }
+    if($i%2==0) {
+      if($_SESSION["username"] == $_SESSION["chatTexte"][$i]) {
+        echo "<p class=\"rightChat\">$text</p>";
+      } else {
+        echo "<p class=\"leftChat\">$text</p>";
+      }
+    }
+  }
 }
 
 file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
@@ -91,27 +99,28 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
   </h1>
 </div>
 <div id="chat">
-<?php 
-  $text = "";
-  $i = 0;
-  for($i = 1; $i<count($_SESSION["chatTexte"]);$i++) {
-    if($i%2!=0) {
-      $text = $_SESSION["chatTexte"][$i];
-    }
-    if($i%2==0) {
-      if($_SESSION["username"] == $_SESSION["chatTexte"][$i]) {
-        echo "<p class=\"rightChat\">$text</p>";
-      } else {
-        echo "<p class=\"leftChat\">$text</p>";
-      }
-    }
-  }
-?>
+
+<script type="text/javascript">
+setInterval(reload, 5000);
+
+function reload( )
+{
+  document.write("<?php show();?>");
+}
+
+var fs = require("fs");
+
+fs.readFile('chatTexte.txt', function(err,data) { if (err) {return console.error(err)} 
+  console.log(data.toString());
+});
+
+</script>
+
 
 </div>
 <div id="eingabe">
 
-<form name="chatForm" action="#" method="POST">
+<form name="chatForm" action="php/chatProcess.php" method="POST" target="_self">
   <div class="d-flex flex-row">
     <input class="col-10" type="text" name="text" id="text" placeholder="message" required>
     <input class="col-2"type="submit" value="senden">
