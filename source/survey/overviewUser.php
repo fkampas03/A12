@@ -2,6 +2,11 @@
     
     session_start();
 
+    if(empty($_SESSION['loginGranted'])) {
+    	header ("LOCATION: login.php");
+    }
+
+
     function createEintraege($creators, $ids, $topics, $texts)	{
         echo "<br>";	
 	for($i=0;$i<count($creators);$i++) 	{
@@ -34,25 +39,30 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <div class="col-lg-10 col-md-5 ms-3">
+                <div class="col-lg-9 col-md-5 ms-3">
                     <a class="navbar-brand nav-font" href="overview.php">Umfrage</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overview.php"><b>Overview</b></a>
+                        <a class="nav-link active" aria-current="page" href="overviewUser.php"><b>Overview</b></a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="register.php">Register</a>
+                        <a class="nav-link active" aria-current="page" href="erstellen.php">Erstellen</a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="login.php">Login</a>
+                        <a class="nav-link active" aria-current="page" href="ergebnisse.php">Anzeigen</a>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ">
+                        <a class="nav-link active" aria-current="page" href="overview.php">Ausloggen</a>
                     </div>
                 </div>
             </div>
@@ -93,10 +103,6 @@
     <footer class="text-white-50 text-center bg-secondary">
       <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
     </footer>
-
-    <?php
-        session_destroy();
-    ?>
 
 </body>
 </html>

@@ -39,6 +39,7 @@ if(isset($_POST['formQuestion']))	{
     //header("LOCATION: ../ergebnisse.php");
 }
 
+
 if(isset($_POST['submitRegister'])) {
 
 
