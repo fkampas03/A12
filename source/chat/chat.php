@@ -5,15 +5,9 @@ $datai = "chatTexte.txt";
 $_SESSION ['chatTexte'] = array();
 $currentText = null;
 
-<<<<<<< HEAD
-//Hier wird überprüft ob etwas übergeben wird
-if(isset($_POST["text"])){
-//Die Übergebenen Sachen werden in Variablen gespeichert
-=======
 //Hier wird Ã¼berprÃ¼ft ob etwas Ã¼bergeben wird
 if(isset($_POST["text"])){
 //Die Ãœbergebenen Sachen werden in Variablen gespeichert
->>>>>>> 4b77acd3316b06ef10e29eea06298cdd380caae3
 $currentText = $_POST["text"];
 }
 
@@ -27,18 +21,14 @@ if(file_exists($datai)) {
 }
 
 if($currentText != null) {
-<<<<<<< HEAD
-    //Die Variablen werden in arrays hinzugefügt
-=======
     //Die Variablen werden in arrays hinzugefÃ¼gt
->>>>>>> 4b77acd3316b06ef10e29eea06298cdd380caae3
     $_SESSION ['chatTexte'][] = $currentText;
     $_SESSION ['chatTexte'][] = $_SESSION["username"]; 
     //echo $currentText;
     //echo "<pre>"; var_dump($_SESSION ['chatTexte']); echo "</pre>";
 }
 
-
+/*
 function show() {
   $text = "";
   $i = 0;
@@ -55,7 +45,7 @@ function show() {
     }
   }
 }
-
+*/
 file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
 
 //echo $_SESSION["username"];
@@ -71,17 +61,7 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
     <title>Chat</title>
 
     <link rel="stylesheet" href="style/styleChat.css">
-    <script>
-        timeSlap=2 // sekunden
-        reloading=function()
-        {
-            setTimeout("reloading()",1000);
-
-            status=timeSlap+" sekunden bis zum reload";
-            if(timeSlap>0) timeSlap--;
-            else location.reload();
-        }
-    </script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
 </head>
 
 <body>
@@ -110,39 +90,45 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
 </div>
 <div id="chat">
 
-<script type="text/javascript">
-setInterval(reload, 5000);
 
-function reload( )
-{
-  document.write("<?php show();?>");
-}
-
-var fs = require("fs");
-
-fs.readFile('chatTexte.txt', function(err,data) { if (err) {return console.error(err)} 
-  console.log(data.toString());
-});
-
-</script>
 
 
 </div>
 <div id="eingabe">
 
-<form name="chatForm" action="php/chatProcess.php" method="POST" target="_self">
-  <div class="d-flex flex-row">
-    <input class="col-10" type="text" name="text" id="text" placeholder="message" required>
+<form name="chatForm" action="php/chatProcess.php" method="POST">
+  <div id="eingabeDiv" class="d-flex flex-row">
+    <input class="col-10 textinput" type="text" name="text" id="text" placeholder="message" required>
     <input class="col-2"type="submit" value="senden">
   </div>
 </form>
 </div>
 </section>
-<footer>
-      <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+<footer class="text-white-50 text-center bg-secondary">
+  <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
 </footer>
 
+<script>
 
+$( document ).ready(function() { //set up refresh timer on page load
+    var refreshTimer = setInterval(function(){refreshMessages()},1000); //creates timer to request every 5 seconds
+});
+var zws;
+function refreshMessages(){
+    $.post( "php/chatReload.php", function( data ) { //fire ajax post request
+      if(data!=zws) {
+        document.getElementById("chat").innerHTML = data;
+        var divscroll = document.getElementByClass("leftChat");
+        divscroll.scrollTop=divscroll.offsetHeight;
+        zws=data;
+      }
+    });
+  }
+
+
+
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
 </html>

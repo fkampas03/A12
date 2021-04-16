@@ -24,11 +24,12 @@ section {
 /***** fieldset *******/
 
 #chat {
-    height: 400px;
+    height: 50vh;
     width: 70%;
     border: 1px solid black;
     margin: auto;
     overflow-y: scroll;
+    padding: 1%;
 }
 
 #eingabe {
@@ -36,15 +37,41 @@ section {
     width: 70%;
 }
 
+#chat div {
+    border-radius: 7px;
+}
+
+.text {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}
+
+.user {
+    font-size: 1rem;
+    color: rgb(44, 44, 44);
+}
+
 .leftChat {
-    margin-left: 5%;
+    margin-left: 2%;
     width: 45%;
+    padding-left: 1%;
+    border-left: solid 1px black;
 }
 
 .rightChat {
+    margin-right: 2%;
+    padding-right: 1%;
     margin-left: 50%;
-    width: 45%;
     text-align: right;
+    border-right: solid 1px black;
+}
+
+#eingabeDiv {
+    height: 5vh;
+}
+
+.textinput {
+    padding-left: 1%;
 }
 
 /******** footer *******/

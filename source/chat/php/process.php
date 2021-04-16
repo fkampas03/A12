@@ -3,7 +3,7 @@
     $userDataFile = '../datei/logindata.csv';
 
 
-    //Wird ausgef�hrt, wenn das Formular zur Registriereung abgeschickt wurde.
+    //Wird ausgeführt, wenn das Formular zur Registriereung abgeschickt wurde.
     if(isset($_POST['submitRegister'])) {
 
 	//Informationen von der Registrierseite holen   
@@ -11,11 +11,11 @@
         $email = $_POST['email'];
         $password = hash('sha256', $_POST['password']);
 
-	//Auf Sonderzeichen pr�fen
+	//Auf Sonderzeichen prüfen
         $username = sonderzeichen($username);
         $email = sonderzeichen($email);
 
-	//Daten aus dem File holen zur �berpr�fung
+	//Daten aus dem File holen zur Überprüfung
 	$handler = fopen($userDataFile, 'r');
 
 	    $usernames = array();
@@ -72,7 +72,7 @@
 
 
 
-    //Wird ausgef�hrt, wenn das Formular zur Registriereung abgeschickt wurde.
+    //Wird ausgeführt, wenn das Formular zur Registriereung abgeschickt wurde.
     if(isset($_POST['submitLogin']))    {
 
 	//Informationen von der Registrierseite holen   
@@ -80,11 +80,11 @@
         $password = hash('sha256', $_POST['password']);
 	$grantName = "";
 
-	//Auf Sonderzeichen pr�fen
+	//Auf Sonderzeichen prüfen
         $loginName = sonderzeichen($loginName);
         $password = sonderzeichen($password);
 
-	//Daten aus dem File holen zur �berpr�fung
+	//Daten aus dem File holen zur Überprüfung
 	$handler = fopen($userDataFile, 'r');
 
 	    $usernames = array();
@@ -116,12 +116,12 @@
 
 	fclose($handler);
 
-	//Daten werden gepr�ft
+	//Daten werden geprüft
 	if($end !== -1)	{
 	    //Login successfull
 	    if($passwords[$end] == $password)	{
 		session_start();
-		//Der Benutzername des Benutzers, welcher sich erfolgreich angemeldet hat wird per Session �bergeben
+		//Der Benutzername des Benutzers, welcher sich erfolgreich angemeldet hat wird per Session übergeben
                 $_SESSION ['username'] = "" . $grantName;
 	        header('Location: ../chat.php');
 	    }	
@@ -149,14 +149,14 @@
 
     //Ueberpruefung und wechseln von Sonderzeichen
     function sonderzeichen($string) {
-        $string = str_replace("ä", "ae", $string);
-        $string = str_replace("ü", "ue", $string);
-        $string = str_replace("ö", "oe", $string);
-        $string = str_replace("Ä", "Ae", $string);
-        $string = str_replace("Ü", "Ue", $string);
-        $string = str_replace("Ö", "Oe", $string);
-        $string = str_replace("ß", "ss", $string);
-        $string = str_replace("´", "", $string);
+        $string = str_replace("Ã¤", "ae", $string);
+        $string = str_replace("Ã¼", "ue", $string);
+        $string = str_replace("Ã¶", "oe", $string);
+        $string = str_replace("Ã„", "Ae", $string);
+        $string = str_replace("Ãœ", "Ue", $string);
+        $string = str_replace("Ã–", "Oe", $string);
+        $string = str_replace("ÃŸ", "ss", $string);
+        $string = str_replace("Â´", "", $string);
         return $string;
     }
 
