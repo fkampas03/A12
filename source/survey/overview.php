@@ -61,7 +61,7 @@
         //Die Methode create Eintrage muss hier aufgerufen werden
         createEintraege("Felix", "Survey", "Dies ist ein Test", "login.php");
         function createEintrag($creator, $topic, $text, $link) {?>
-            <fieldset class="col-lg-9 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid pink; border-radius: 2em;">
+            <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid pink; border-radius: 2em;">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6">
