@@ -1,6 +1,10 @@
 <?php
-
 SESSION_START();
+if(empty($_SESSION['username'])) {
+  header ("LOCATION: login.php");
+}
+
+
 $datai = "chatTexte.txt";
 $_SESSION ['chatTexte'] = array();
 $currentText = null;
