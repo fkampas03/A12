@@ -1,12 +1,38 @@
 <?php
 SESSION_START();
 
-$user = $_SESSION['username'];
+$user = $_SESSION['loginGranted'];
+$frage = $_POST['text'];
+if(isset($_POST['anonym'])) {
+    $anonym = 1;
+} else {
+    $anonym = 0;
+}
 
-$pdo = new PDO ( 'mysql:host=localhost:3306;dbname=db3bhit_s11' , 'root' , null ) 
+echo $user;
+echo $frage;
+echo $anonym;
 
-$statement = $pdo -> prepare ( "INSERT INTO fragen (ID, frage, anonym)
-VALUES (?, ?, ?)" ) ;
-$statement -> execute ( array ( 1 , 'wie gehts' , 'n' ) ) ;
+$pdo = new PDO ( 'mysql:host=localhost;dbname=db3bhit_s11' , 'db3bhit_s11' , 'ohphiM9z' ); 
+
+if ($pdo == false){
+    echo "False";
+} else {
+    echo "true";
+}
+
+$select = "SELECT ID FROM fragen" ;
+foreach ( $pdo -> query ( $select ) as $row ) { 
+    $ID = $row;
+}
+
+echo "<pre>"; var_dump($ID); echo "</pre>";
+echo $ID["ID"];
+
+$statement = $pdo -> prepare ( "INSERT INTO fragen (ID, username, frage, anonym)
+VALUES (?, ?, ?, ?)" ) ;
+$statement -> execute ( array ( $ID["ID"], $user , $frage , $anonym ) ) ;
+
+//header("LOCATION: ../ergebnisse.php");
 
 ?>

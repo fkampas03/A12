@@ -55,10 +55,10 @@
     <main>
 	<fieldset class="col-lg-6 col-md-8 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5 fieldsetStyle">
             <legend>Survey</legend>
-	    <form name="formQuestion" class="w-100 p-3" action="php/processUmfang.php" method="POST" enctype="multipart/form-data">
+	    <form name="formQuestion" class="w-100 p-3" action="php/processUmfrage.php" method="POST" enctype="multipart/form-data">
   	        <div class="form-group">
     		    <label for="textarea">Enter your question!</label>
-    	   	    <textarea class="form-control w-100 mb-2" id="textarea" rows="3"></textarea>
+    	   	    <textarea class="form-control w-100 mb-2" id="textarea" name="text" rows="3"></textarea>
                 <input type="checkbox" name="anonym" id="anonymCheckbox">
                 <label for="anonymCheckbox">Umfrage Anonym erstellen?</label>
   	        </div>  	    
