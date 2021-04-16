@@ -1,6 +1,6 @@
 <?php
     SESSION_START();
-    if(empty($_SESSION['loginGranted'])) {
+    if(empty($_SESSION['username'])) {
     	header ("LOCATION: login.php");
     }
 ?>
@@ -57,6 +57,90 @@
         </nav>
     </header>
     <main>
+
+    <?php
+
+    $pdo = new PDO ( 'mysql:host=localhost;dbname=db3bhit_s11' , 'db3bhit_s11' , 'ohphiM9z' ); 
+
+    $IDs = array();
+    $usernames = array();
+    $fragen = array();
+    $anonyms = array();
+
+    $username = $_SESSION['username'];
+
+    $select = "SELECT ID, username, frage, anonym FROM fragen WHERE username=\"$username\"";
+    foreach ( $pdo -> query ( $select ) as $row ) { 
+    	$IDs[] = $row["ID"];
+        $usernames[] = $row["username"];
+        $fragen[] = $row["frage"];
+        $anonyms[] = $row["anonym"];
+    }
+
+/*
+    echo "<pre>"; var_dump($IDs); echo "</pre>";
+    echo "<pre>"; var_dump($usernames); echo "</pre>";
+    echo "<pre>"; var_dump($fragen); echo "</pre>";
+    echo "<pre>"; var_dump($anonyms); echo "</pre>";
+*/
+    for($i = 0; $i<count($IDs);$i++) {
+        ?>
+        <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid black; border-radius: 2em;">
+            <div class="container">
+                <div class="row d-flex flex-column">
+                    <div class="col-lg-6">
+                        <?php 
+                            if($anonyms[$i]==0){
+                                echo "<b>Survey</b> by <i>" . $usernames[$i] . "</i><br><br>" . $fragen[$i];
+                            } else {
+                                echo "<b>Survey</b> by <i>-Anonym-</i><br><br>" . $fragen[$i];
+                            }
+                            
+                        ?>
+                    </div>
+                    <div class="d-flex">
+                        <form name="Survey" action="php/processUmfrage.php" method="POST" enctype="multipart/form-data" style="width: 33%;">
+                            <div class="w-100 m-1 p-2 text-center">
+                                <input type="hidden" name="ID" value="<?php echo $IDs[$i];?>">
+                                <div class="m-2">
+                                    <button style="width: 100%" type="submit" name="action" value="ja" class="btn btn-success">Yes</button>
+                                </div>
+                                <div class="m-2">
+                                    <button style="width: 100%" type="submit" name="action" value="nein" class="btn btn-danger">No</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="ergebnis" style="width: 34%; text-align: center;">
+                            <?php 
+                                $ii = $i + 1;
+                                unset($IDj);
+                                unset($IDn);
+                                $select = "SELECT ID FROM antworten WHERE fragenID=\"$ii\" AND antwort=\"ja\"";
+                                foreach ( $pdo -> query ( $select ) as $row ) { 
+                                    $IDj[] = $row["ID"];
+                                }
+                                $select = "SELECT ID FROM antworten WHERE fragenID=\"$ii\" AND antwort=\"nein\"";
+                                foreach ( $pdo -> query ( $select ) as $row ) { 
+                                    $IDn[] = $row["ID"];
+                                }
+
+                                echo "<p>Ergebnis:</p><p>Ja: ". count($IDj) ."</p><p>Nein: ". count($IDn) ."</p>"
+                                
+                            ?>
+                        </div> 
+                        <div style="width: 33%;">
+                            <form name="showSolution" action="php/process.php" method="POST" enctype="multipart/form-data">
+                                <button style="width: 100%" type="submit" name="showSolution" value="showSolution" class="btn btn-info">Ergbnis veröffentlichen</button>
+                            </form>
+                        </div>
+                    </div> 
+                </div>
+            </div>    
+        </fieldset>
+    <?php 
+    }
+    
+?>
 
     </main>
 

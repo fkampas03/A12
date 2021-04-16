@@ -78,14 +78,14 @@
 	//Informationen von der Registrierseite holen   
         $loginName = $_POST['loginName'];
         $password = hash('sha256', $_POST['password']);
-	$grantName = "";
+		$grantName = "";
 
 	//Auf Sonderzeichen prüfen
         $loginName = sonderzeichen($loginName);
         $password = sonderzeichen($password);
 
 	//Daten aus dem File holen zur Überprüfung
-	$handler = fopen($userDataFile, 'r');
+		$handler = fopen($userDataFile, 'r');
 
 	    $usernames = array();
 	    $emails = array();
@@ -96,49 +96,49 @@
 	    $end = -1;
 	    while (($data = fgetcsv($handler, 1000, ";")) !== FALSE ) {
 	    	$num = count($data);
-            	for ($c=0; $c < $num; $c+=3) {
-               	    array_push($usernames, $data[$c]);
-            	}
-		for ($c=1; $c < $num; $c+=3) {
-               	    array_push($emails, $data[$c]);
+            for ($c=0; $c < $num; $c+=3) {
+               	array_push($usernames, $data[$c]);
+            }
+			for ($c=1; $c < $num; $c+=3) {
+               	array_push($emails, $data[$c]);
           	}
-		for ($c=2; $c < $num; $c+=3) {
-		    array_push($passwords, $data[$c]);
-		}
-		if($usernames[$row] == $loginName or $emails[$row] == $loginName)	{
-		    $end = $row;
-		    $grantName = $usernames[$row];
-		}
+			for ($c=2; $c < $num; $c+=3) {
+		    	array_push($passwords, $data[$c]);
+			}
+			if($usernames[$row] == $loginName or $emails[$row] == $loginName)	{
+		    	$end = $row;
+		    	$grantName = $usernames[$row];
+			}
 
-		$row = $row + 1;		
+			$row = $row + 1;
 	    }
 	    ini_set('auto_detect_line_endings',FALSE);
 
-	fclose($handler);
+		fclose($handler);
 
 	//Daten werden geprüft
-	if($end !== -1)	{
+		if($end !== -1)	{
 	    //Login successfull
-	    if($passwords[$end] == $password)	{
-		session_start();
+	    	if($passwords[$end] == $password)	{
+			session_start();
 		//Der Benutzername des Benutzers, welcher sich erfolgreich angemeldet hat wird per Session übergeben
-                $_SESSION ['loginGranted'] = "" . $grantName;
-	        header('Location: ../erstellen.php');
-	    }	
+                $_SESSION ['username'] = "" . $grantName;
+	        	header('Location: ../erstellen.php');
+	    	}	
 	    //password wrong
-	    else {
-		session_start();
+	    	else {
+			session_start();
                 $_SESSION ['wronglogin'] = "";
-	        header('Location: ../login.php');
-	    }
-	}
+	        	header('Location: ../login.php');
+	    	}
+		}
 
 	//loginname wrong
-	else	{
-	    session_start();
-            $_SESSION ['wronglogin'] = "";
-	    header('Location: ../login.php');
-	}
+		else {
+	    	session_start();
+            	$_SESSION ['wronglogin'] = "";
+	    	header('Location: ../login.php');
+		}
     }
 
 

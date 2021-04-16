@@ -2,7 +2,7 @@
     
     session_start();
 
-    if(empty($_SESSION['loginGranted'])) {
+    if(empty($_SESSION['username'])) {
     	header ("LOCATION: login.php");
     }
 

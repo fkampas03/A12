@@ -79,10 +79,6 @@
       <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
     </footer>
 
-    <?php
-        session_destroy();
-    ?>
-
 </body>
 </html>
 
