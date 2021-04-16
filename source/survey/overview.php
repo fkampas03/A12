@@ -2,9 +2,11 @@
     
     session_start();
 
-    function createEintraege($creator, $topic, $text, $link)	{
+    function createEintraege($creators, $ids, $topics, $texts)	{
         echo "<br>";	
-        createEintrag($creator, $topic, $text, $link);
+	for($i=0;$i<count($creators);$i++) 	{
+        	createEintrag($creators[$i], $ids[$i], $topics[$i], $texts[$i]);
+	}
     }
 
 ?>
@@ -59,16 +61,26 @@
     <main>
         <?php 
         //Die Methode create Eintrage muss hier aufgerufen werden
-        createEintraege("Felix", "Survey", "Dies ist ein Test", "login.php");
-        function createEintrag($creator, $topic, $text, $link) {?>
-            <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid pink; border-radius: 2em;">
+        createEintrag("Felix", 1, "Survey", "are you good?");
+        function createEintrag($creator, $id, $topic, $text) {?>
+            <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid black; border-radius: 2em;">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6">
                             <?php 
-                                echo '<a href="' . $link . '"><b>' . $topic . "</b></a>" . " by <i>" . $creator . "</i>" . "<br><br>" . $text;
+                                echo "<b>" . $topic . "</b>" . " by <i>" . $creator . "</i>" . "<br><br>" . $text;
                             ?>
-                        </div>    
+                        </div>
+			<form name="<?php echo $id;?>" action="php/processUmfrage.php" method="POST" enctype="multipart/form-data" class="m-1 p-2 w-25 text-center">
+
+			    <div class="m-2">
+			    	<button style="width: 100%" type="submit" name="action" value="ja" class="btn btn-success">Yes</button>
+			    </div>
+			    <div class="m-2">
+			    	<button style="width: 100%" type="submit" name="action" value="nein" class="btn btn-danger">No</button>
+			    </div>
+
+			</form>    
                     </div>
                 </div>    
             </fieldset>
