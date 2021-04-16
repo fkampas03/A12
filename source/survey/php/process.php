@@ -139,8 +139,7 @@
             $_SESSION ['wronglogin'] = "";
 	    header('Location: ../login.php');
 	}
-}
-
+    }
 
 
 

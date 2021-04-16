@@ -1,3 +1,10 @@
+<?php
+    SESSION_START();
+    if(empty($_SESSION['loginGranted'])) {
+    	header ("LOCATION: login.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
