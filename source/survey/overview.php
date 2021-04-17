@@ -1,14 +1,10 @@
 <?php
-    
     session_start();
 
-    function createEintraege($creators, $ids, $topics, $texts)	{
-        echo "<br>";	
-	for($i=0;$i<count($creators);$i++) 	{
-        	createEintrag($creators[$i], $ids[$i], $topics[$i], $texts[$i]);
+    if(isset($_POST['logout'])) {
+		session_destroy();
+        $_SESSION = [];
 	}
-    }
-
 ?>
 
 
@@ -33,70 +29,152 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <div class="col-lg-10 col-md-5 ms-3">
+        <div class="container-fluid">
+                <div class="col-lg-9 col-md-5 ms-3">
                     <a class="navbar-brand nav-font" href="overview.php">Umfrage</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overview.php"><b>Overview</b></a>
+                        <a class="nav-link active" aria-current="page" href="overview.php">Overview</a>
                     </div>
                 </div>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="register.php">Register</a>
+
+                <?php
+                
+                if(!empty($_SESSION['username'])) {
+                    ?>
+
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav ">
+                            <a class="nav-link active" aria-current="page" href="erstellen.php"><b>create Survey</b></a>
+                        </div>
                     </div>
-                </div>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="login.php">Login</a>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav ">
+                            <a class="nav-link active" aria-current="page" href="ergebnisse.php">your Surveys</a>
+                        </div>
                     </div>
-                </div>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <form name="logoutForm" action="overview.php" method="POST" enctype="multipart/form-data" style="width: 100%;">
+                            <div class="m-2">
+                                <button style="width: 100%" type="submit" name="logout" value="logout" class="btn btn-secondary">Log Out</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <?php
+                } else {
+
+                ?>
+
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav ">
+                            <a class="nav-link active" aria-current="page" href="register.php">Register</a>
+                        </div>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav ">
+                            <a class="nav-link active" aria-current="page" href="login.php">Login</a>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </nav>
     </header>
     <main>
-        <?php 
-        //Die Methode create Eintrage muss hier aufgerufen werden
-        createEintrag("Felix", 1, "Survey", "are you good?");
-        function createEintrag($creator, $id, $topic, $text) {?>
-            <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid black; border-radius: 2em;">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <?php 
-                                echo "<b>" . $topic . "</b>" . " by <i>" . $creator . "</i>" . "<br><br>" . $text;
-                            ?>
-                        </div>
-			<form name="<?php echo $id;?>" action="php/processUmfrage.php" method="POST" enctype="multipart/form-data" class="w-100 ">
-			    <div class="w-25 m-1 p-2 text-center">
-			    	<div class="m-2">
-			    	    <button style="width: 100%" type="submit" name="action" value="ja" class="btn btn-success">Yes</button>
-			    	</div>
-			    	<div class="m-2">
-			    	    <button style="width: 100%" type="submit" name="action" value="nein" class="btn btn-danger">No</button>
-			    	</div>
-			    </div>
-			    
+    <?php
+    $pdo = new PDO ( 'mysql:host=localhost;dbname=db3bhit_s11' , 'db3bhit_s11' , 'ohphiM9z' ); 
 
-			</form>    
+    $IDs = array();
+    $usernames = array();
+    $fragen = array();
+    $anonyms = array();
+    $public = array();
+
+    if(!empty($_SESSION['username'])) {
+        $username = $_SESSION['username'];
+    }
+
+    $select = "SELECT ID, username, frage, anonym, public FROM fragen";
+    foreach ( $pdo -> query ( $select ) as $row ) { 
+    	$IDs[] = $row["ID"];
+        $usernames[] = $row["username"];
+        $fragen[] = $row["frage"];
+        $anonyms[] = $row["anonym"];
+        $public[] =  $row["public"];
+    }
+
+    for($i = 0; $i<count($IDs);$i++) {
+        ?>
+        <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid black; border-radius: 2em;">
+            <div class="container">
+                <div class="row d-flex flex-column">
+                    <div class="col-lg-6">
+                        <?php 
+                            if($anonyms[$i]==0){
+                                echo "<b>Survey</b> by <i>" . $usernames[$i] . "</i><br><br>" . $fragen[$i];
+                            } else {
+                                echo "<b>Survey</b> by <i>-Anonym-</i><br><br>" . $fragen[$i];
+                            }
+                            
+                        ?>
                     </div>
-                </div>    
-            </fieldset>
-        <?php }?>
+                    <div class="d-flex">
+                        <form name="Survey" action="php/processUmfrage.php" method="POST" enctype="multipart/form-data" style="width: 50%;">
+                            <div class="w-100 m-1 p-2 text-center">
+                                <input type="hidden" name="ID" value="<?php echo $IDs[$i];?>">
+                                <div class="m-2">
+                                    <button style="width: 100%" type="submit" name="action" value="ja" class="btn btn-success">Yes</button>
+                                </div>
+                                <div class="m-2">
+                                    <button style="width: 100%" type="submit" name="action" value="nein" class="btn btn-danger">No</button>
+                                </div>
+                            </div>
+                        </form>
+                        <?php 
+                            if($public[$i]!=0) {
+                            ?>
+                            <div class="ergebnis" style="width: 30%; text-align: center;">
+                                <?php 
+                                    $ii = $i + 1;
+                                    unset($IDj);
+                                    unset($IDn);
+                                    $select = "SELECT ID FROM antworten WHERE fragenID=\"$ii\" AND antwort=\"ja\"";
+                                    foreach ( $pdo -> query ( $select ) as $row ) { 
+                                        $IDj[] = $row["ID"];
+                                    }
+                                    $select = "SELECT ID FROM antworten WHERE fragenID=\"$ii\" AND antwort=\"nein\"";
+                                    foreach ( $pdo -> query ( $select ) as $row ) { 
+                                        $IDn[] = $row["ID"];
+                                    }
+
+                                    echo "<p>Ergebnis:</p><p>Ja: ". count($IDj) ."</p><p>Nein: ". count($IDn) ."</p>"
+                                
+                                ?>
+                            </div> 
+                        <?php 
+                        }
+                        ?>
+                    </div> 
+                </div>
+            </div>    
+        </fieldset>
+    <?php 
+    }
+    
+?>
 
     </main>
 
     <footer class="text-white-50 text-center bg-secondary">
       <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
     </footer>
-
-    <?php
-        session_destroy();
-    ?>
 
 </body>
 </html>

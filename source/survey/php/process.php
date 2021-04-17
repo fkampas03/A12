@@ -123,7 +123,7 @@
 			session_start();
 		//Der Benutzername des Benutzers, welcher sich erfolgreich angemeldet hat wird per Session übergeben
                 $_SESSION ['username'] = "" . $grantName;
-	        	header('Location: ../erstellen.php');
+	        	header('Location: ../overview.php');
 	    	}	
 	    //password wrong
 	    	else {
@@ -140,6 +140,15 @@
 	    	header('Location: ../login.php');
 		}
     }
+
+
+	if(isset($_POST['logout'])) {
+		session_destroy();
+		echo "yo";
+		unset($_SESSION['username']);
+
+		header('Location: ../overview.php');
+	}
 
 
 

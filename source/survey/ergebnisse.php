@@ -33,24 +33,28 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overviewUser.php">Overview</a>
+                        <a class="nav-link active" aria-current="page" href="overview.php">Overview</a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="erstellen.php">Erstellen</a>
+                        <a class="nav-link active" aria-current="page" href="erstellen.php">create Survey</a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="ergebnisse.php"><b>Anzeigen</b></a>
+                        <a class="nav-link active" aria-current="page" href="ergebnisse.php"><b>your Surveys</b></a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overview.php">Ausloggen</a>
+                    <form name="logoutForm" action="overview.php" method="POST" enctype="multipart/form-data" style="width: 100%;">
+                        <div class="m-2">
+                            <button style="width: 100%" type="submit" name="logout" value="logout" class="btn btn-secondary">Log Out</button>
+                        </div>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -66,15 +70,17 @@
     $usernames = array();
     $fragen = array();
     $anonyms = array();
+    $public = array();
 
     $username = $_SESSION['username'];
 
-    $select = "SELECT ID, username, frage, anonym FROM fragen WHERE username=\"$username\"";
+    $select = "SELECT ID, username, frage, anonym, public FROM fragen WHERE username=\"$username\"";
     foreach ( $pdo -> query ( $select ) as $row ) { 
     	$IDs[] = $row["ID"];
         $usernames[] = $row["username"];
         $fragen[] = $row["frage"];
         $anonyms[] = $row["anonym"];
+        $public[] =  $row["public"];
     }
 
 /*
@@ -90,7 +96,7 @@
                 <div class="row d-flex flex-column">
                     <div class="col-lg-6">
                         <?php 
-                            if($anonyms[$i]==0){
+                            if(!$anonyms[$i]){
                                 echo "<b>Survey</b> by <i>" . $usernames[$i] . "</i><br><br>" . $fragen[$i];
                             } else {
                                 echo "<b>Survey</b> by <i>-Anonym-</i><br><br>" . $fragen[$i];
@@ -129,8 +135,17 @@
                             ?>
                         </div> 
                         <div style="width: 33%;">
-                            <form name="showSolution" action="php/process.php" method="POST" enctype="multipart/form-data">
-                                <button style="width: 100%" type="submit" name="showSolution" value="showSolution" class="btn btn-info">Ergbnis veröffentlichen</button>
+                            <form name="showSolution" action="php/processUmfrage.php" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="ID" value="<?php echo $IDs[$i];?>">
+                                <?php
+
+                                    if($public[$i]==0) {
+                                        echo "<button style=\"width: 100%\" type=\"submit\" name=\"showSolution\" value=\"showSolution\" class=\"btn btn-info\">Ergbnis veröffentlichen</button>";
+                                    } else {
+                                        echo "<button style=\"width: 100%\" type=\"submit\" name=\"hideSolution\" value=\"hideSolution\" class=\"btn btn-info\">Ergbnis privat machen</button>";
+                                    }
+
+                                ?>
                             </form>
                         </div>
                     </div> 

@@ -34,25 +34,27 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overviewUser.php">Overview</a>
+                        <a class="nav-link active" aria-current="page" href="overview.php">Overview</a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="erstellen.php"><b>Erstellen</b></a>
+                        <a class="nav-link active" aria-current="page" href="erstellen.php"><b>create Survey</b></a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="ergebnisse.php">Anzeigen</a>
+                        <a class="nav-link active" aria-current="page" href="ergebnisse.php">your Surveys</a>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overview.php">Ausloggen</a>
-                    </div>
+                    <form name="logoutForm" action="overview.php" method="POST" enctype="multipart/form-data" style="width: 100%;">
+                        <div class="m-2">
+                            <button style="width: 100%" type="submit" name="logout" value="logout" class="btn btn-secondary">Log Out</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -67,7 +69,7 @@
                 <input type="checkbox" name="anonym" id="anonymCheckbox">
                 <label for="anonymCheckbox">Umfrage Anonym erstellen?</label>
   	        </div>  	    
-  	        <button type="submit" class="btn btn-primary">Enter</button>
+  	        <button type="submit" name="createSurvey" class="btn btn-primary">Enter</button>
 	    </form>
 	</fieldset>
     </main>
