@@ -37,7 +37,7 @@ if(isset($_POST['createSurvey']))	{
     VALUES (?, ?, ?, ?, ?)" ) ;
     $statement -> execute ( array ( $ID["ID"], $user , $frage , $anonym, 0) ) ;
 
-    header("LOCATION: ../ergebnisse.php");
+    header("LOCATION: ../overview.php");
 }
 
 //if(isset($_POST['submitRegister'])) {
@@ -70,11 +70,7 @@ if(isset($_POST['action'])) {
     VALUES (?, ?, ?, ?)" ) ;
     $statement -> execute ( array ( $IDf["ID"], $ID , $user , $answer ) ) ;
 
-    if(isset($_SESSION['username'])) {
-        header("LOCATION: ../ergebnisse.php");
-    } else {
-        header("LOCATION: ../overview.php");
-    }
+    header("LOCATION: ../overview.php");
     
 }
 

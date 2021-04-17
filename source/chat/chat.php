@@ -69,8 +69,8 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
 </head>
 
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="spacer"></div>
+<nav class="navbar position-fixed top-0 w-100 navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <div class="col-11 ms-5">
       <a class="navbar-brand nav-font" href="#">Chat</a>
@@ -108,8 +108,9 @@ file_put_contents("chatTexte.txt", implode(";;;", $_SESSION ['chatTexte']));
 </form>
 </div>
 </section>
-<footer class="text-white-50 text-center bg-secondary">
-  <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+<footer class="text-white-50 text-center bg-secondary d-flex justify-content-center">
+  <p class="fitem"> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+  <a class="fitem link-info" href="../../../index.html">zum Projekteserver</a>
 </footer>
 
 <script>

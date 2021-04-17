@@ -78,8 +78,10 @@
     </main>
 
     <footer class="text-white-50 text-center bg-secondary d-flex justify-content-center">
-      <p class="fitem"> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
-      <a class="fitem link-info" href="../../../index.html">zum Projekteserver</a>
+        <p class="fitem"> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+        <form name="back" action="php/process.php" method="POST" enctype="multipart/form-data" style="width: 20%;">
+            <button style="width: 100%" type="submit" name="back" value="back" class="btn btn-secondary backBut">zum Projektserver</button>
+        </form>
     </footer>
 
 </body>

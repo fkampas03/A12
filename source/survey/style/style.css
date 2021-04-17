@@ -29,6 +29,8 @@ legend {
 .fitem {
     margin-left: 2%;
     margin-right: 2%;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 #anonymCheckbox {
@@ -38,5 +40,10 @@ legend {
 
 .spacer {
     height: 8vh;
+}
+
+.backBut {
+    font-size: 1.2rem;
+    color: rgb(255, 159, 80);
 }
 

@@ -27,7 +27,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar position-fixed top-0 w-100 navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <div class="col-lg-11 col-md-8 ms-5">
                     <a class="navbar-brand nav-font" href="#">Chat</a>
@@ -44,6 +44,7 @@
         </nav>
     </header>
     <main>
+    <div class="spacer"></div>
         <fieldset class="col-lg-6 col-md-8 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5 fieldsetStyle">
             <legend>Login</legend>
             <form name="formLogin" action="php/process.php" method="POST" enctype="multipart/form-data">
@@ -65,8 +66,9 @@
         </fieldset>
     </main>
 
-    <footer class="text-white-50 text-center bg-secondary">
-      <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+    <footer class="text-white-50 text-center bg-secondary d-flex justify-content-center">
+      <p class="fitem"> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+      <a class="fitem link-info" href="../../../index.html">zum Projekteserver</a>
     </footer>
 
     <?php

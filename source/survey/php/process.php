@@ -143,11 +143,19 @@
 
 
 	if(isset($_POST['logout'])) {
+		session_start();
+		$_SESSION = [];
 		session_destroy();
-		echo "yo";
-		unset($_SESSION['username']);
 
 		header('Location: ../overview.php');
+	}
+
+	if(isset($_POST['back'])) {
+		session_start();
+		$_SESSION = [];
+		session_destroy();
+
+		header('Location: ../../../../index.html');
 	}
 
 
