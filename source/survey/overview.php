@@ -29,7 +29,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar position-fixed top-0 w-100 navbar-expand-lg navbar-light">
         <div class="container-fluid">
                 <div class="col-lg-9 col-md-5 ms-3">
                     <a class="navbar-brand nav-font" href="overview.php">Umfrage</a>
@@ -85,6 +85,8 @@
         </nav>
     </header>
     <main>
+        <div class="spacer"></div>
+        <h1 class="display-3 text-center">Overview</h1>
     <?php
     $pdo = new PDO ( 'mysql:host=localhost;dbname=db3bhit_s11' , 'db3bhit_s11' , 'ohphiM9z' ); 
 
@@ -198,11 +200,12 @@
     }
     
 ?>
-
+    <div class="spacer"></div>
     </main>
 
-    <footer class="text-white-50 text-center bg-secondary">
-      <p> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+    <footer class="text-white-50 text-center bg-secondary d-flex justify-content-center">
+      <p class="fitem"> &copy; 2020 - 2021 Mimmler Florian, Felix Kampas </p>
+      <a class="fitem link-info" href="../../../index.html">zum Projekteserver</a>
     </footer>
 
 </body>
