@@ -19,6 +19,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <!--Importiert das css-File-->
     <link rel="stylesheet" href="style/styleLogin.css">
+    <link rel="stylesheet" href="style/style.css">
 
     <!--Importiert das Bootstrap script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous" async></script>
@@ -38,7 +39,7 @@
                 </button>
 		    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="overview.php">Overview</a>
+                        <a class="nav-link active" aria-current="page" href="overview.php"><b>Overview</b></a>
                     </div>
                 </div>
 
@@ -49,14 +50,10 @@
 
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav ">
-                            <a class="nav-link active" aria-current="page" href="erstellen.php"><b>create Survey</b></a>
+                            <a class="nav-link active" aria-current="page" href="erstellen.php">create Survey</a>
                         </div>
                     </div>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav ">
-                            <a class="nav-link active" aria-current="page" href="ergebnisse.php">your Surveys</a>
-                        </div>
-                    </div>
+                    
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <form name="logoutForm" action="overview.php" method="POST" enctype="multipart/form-data" style="width: 100%;">
                             <div class="m-2">
@@ -111,16 +108,27 @@
     }
 
     for($i = 0; $i<count($IDs);$i++) {
+        if($usernames[$i] == $_SESSION['username']) {
         ?>
-        <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5" style="border: 2px solid black; border-radius: 2em;">
+            <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5 fieldsetStyle yourSurvey">
+                <legend>
+                    Your Survey
+                </legend>
+        <?php
+        } else {
+            ?>
+                <fieldset class="col-lg-10 col-md-10 col-sm-10 col-xs-11 mx-auto mt-5 py-4 px-5 Survey fieldsetStyle">
+            <?php
+        }
+        ?>
             <div class="container">
                 <div class="row d-flex flex-column">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 d-felx flex-row">
                         <?php 
                             if($anonyms[$i]==0){
-                                echo "<b>Survey</b> by <i>" . $usernames[$i] . "</i><br><br>" . $fragen[$i];
+                                echo "<p class=\"header2\">Survey by " . $usernames[$i] . "</p><p class=\"headerFrage\">" . $fragen[$i] . "</p>";
                             } else {
-                                echo "<b>Survey</b> by <i>-Anonym-</i><br><br>" . $fragen[$i];
+                                echo "<p class=\"header2\">Survey by -Anonym-</p><p class=\"headerFrage\">" . $fragen[$i] . "</p>";
                             }
                             
                         ?>
@@ -138,7 +146,7 @@
                             </div>
                         </form>
                         <?php 
-                            if($public[$i]!=0) {
+                            if($public[$i]!=0 || $usernames[$i] == $_SESSION['username']) {
                             ?>
                             <div class="ergebnis" style="width: 30%; text-align: center;">
                                 <?php 
@@ -159,6 +167,27 @@
                                 ?>
                             </div> 
                         <?php 
+                        }
+
+                        if($usernames[$i] == $_SESSION['username']) {
+
+                            ?>
+                            <div style="width: 33%;">
+                            <form name="showSolution" action="php/processUmfrage.php" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="ID" value="<?php echo $IDs[$i];?>">
+                                <?php
+
+                                    if($public[$i]==0) {
+                                        echo "<button style=\"width: 100%\" type=\"submit\" name=\"showSolution\" value=\"showSolution\" class=\"btn btn-info\">Ergbnis veröffentlichen</button>";
+                                    } else {
+                                        echo "<button style=\"width: 100%\" type=\"submit\" name=\"hideSolution\" value=\"hideSolution\" class=\"btn btn-info\">Ergbnis privat machen</button>";
+                                    }
+
+                                ?>
+                            </form>
+                        </div>
+                            <?php
+
                         }
                         ?>
                     </div> 

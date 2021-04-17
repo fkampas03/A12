@@ -34,7 +34,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-		    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ">
                         <a class="nav-link active" aria-current="page" href="overview.php">Overview</a>
                     </div>
@@ -44,11 +44,7 @@
                         <a class="nav-link active" aria-current="page" href="erstellen.php"><b>create Survey</b></a>
                     </div>
                 </div>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ">
-                        <a class="nav-link active" aria-current="page" href="ergebnisse.php">your Surveys</a>
-                    </div>
-                </div>
+                
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <form name="logoutForm" action="overview.php" method="POST" enctype="multipart/form-data" style="width: 100%;">
                         <div class="m-2">

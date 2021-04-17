@@ -9,21 +9,21 @@ if(isset($_POST['createSurvey']))	{
     $user = $_SESSION['username'];
     $frage = $_POST['text'];
     if(isset($_POST['anonym'])) {
-    	$anonym = true;
+    	$anonym = 0;
     } else {
-    	$anonym = false;
+    	$anonym = 1;
     }
 
     $pdo = new PDO ( 'mysql:host=localhost;dbname=db3bhit_s11' , 'db3bhit_s11' , 'ohphiM9z' ); 
-    //echo $user;
-    //echo $frage;
-    //echo $anonym;
+    echo $user;
+    echo $frage;
+    echo $anonym;
 
-    /*if ($pdo == false){
+    if ($pdo == false){
     	echo "False";
     } else {
     	echo "true";
-    }*/
+    }
 
     $select = "SELECT ID FROM fragen" ;
     foreach ( $pdo -> query ( $select ) as $row ) { 
@@ -33,9 +33,9 @@ if(isset($_POST['createSurvey']))	{
     //echo "<pre>"; var_dump($ID); echo "</pre>";
     //echo $ID["ID"];
 
-    $statement = $pdo -> prepare ( "INSERT INTO fragen (ID, username, frage, anonym)
-    VALUES (?, ?, ?, ?)" ) ;
-    $statement -> execute ( array ( $ID["ID"], $user , $frage , $anonym ) ) ;
+    $statement = $pdo -> prepare ( "INSERT INTO fragen (ID, username, frage, anonym, public)
+    VALUES (?, ?, ?, ?, ?)" ) ;
+    $statement -> execute ( array ( $ID["ID"], $user , $frage , $anonym, 0) ) ;
 
     header("LOCATION: ../ergebnisse.php");
 }
@@ -102,7 +102,7 @@ if(isset($_POST['showSolution']) || isset($_POST['hideSolution'])) {
     $statement = $pdo -> prepare ( "UPDATE fragen SET public=:publicneu WHERE ID= \"$ID\"" ) ;
     $statement -> execute (array('publicneu' => $public));
 
-    header("LOCATION: ../ergebnisse.php");
+    header("LOCATION: ../overview.php");
 }
 
 
