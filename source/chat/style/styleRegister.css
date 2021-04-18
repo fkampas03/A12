@@ -2,19 +2,9 @@ html {
   position: relative;
   min-height: 100%;
 }
-
-nav {
-  background-color: rgb(177, 177, 177);
-}
-
 body {
   margin-bottom: 60px; /* Margin bottom by footer height */
 }
-
-.spacer {
-  height: 8vh;
-}
-
 footer {
   position: absolute;
   bottom: 0;
@@ -29,11 +19,6 @@ footer {
     border-radius: 2em;
 }
 
-.link, a {
-  text-decoration: none;
-}
-
-.fitem {
-  margin-left: 2%;
-  margin-right: 2%;
+.link {
+    text-decoration: none;
 }

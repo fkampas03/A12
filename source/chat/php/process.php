@@ -5,11 +5,13 @@
 
     //Wird ausgeführt, wenn das Formular zur Registriereung abgeschickt wurde.
     if(isset($_POST['submitRegister'])) {
-
+	
 	//Informationen von der Registrierseite holen   
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = hash('sha256', $_POST['password']);
+	$leftButton = $_POST['leftButton'];
+	$rightButton = $_POST['rightButton'];
 
 	//Auf Sonderzeichen prüfen
         $username = sonderzeichen($username);
@@ -41,6 +43,13 @@
 	    ini_set('auto_detect_line_endings',FALSE);
 
 	fclose($handler);
+
+	//Ueberpruefung, ob das Captcha richtig ausgefuehrt wurde
+	if($leftButton == "0" AND $rightButton == "0")	{
+	    session_start();
+            $_SESSION ['wrongcaptcha'] = "";
+	    header('Location: ../register.php');
+	}
 
 	//Daten werden gespeichert
 	if($fail == 0)	{	
