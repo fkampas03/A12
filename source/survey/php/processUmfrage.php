@@ -9,9 +9,9 @@ if(isset($_POST['createSurvey']))	{
     $user = $_SESSION['username'];
     $frage = $_POST['text'];
     if(isset($_POST['anonym'])) {
-    	$anonym = 0;
-    } else {
     	$anonym = 1;
+    } else {
+    	$anonym = 0;
     }
 
     $pdo = new PDO ( 'mysql:host=localhost;dbname=db3bhit_s11' , 'db3bhit_s11' , 'ohphiM9z' ); 
